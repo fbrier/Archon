@@ -38,7 +38,7 @@ services:
       - ./migration:/app/migration # Mount migration files for version tracking
     extra_hosts:
       - "host.docker.internal:host-gateway"
-    working_dir: /app
+    working_dir: /python
     command:
       [
         "python",
