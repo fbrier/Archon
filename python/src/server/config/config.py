@@ -102,13 +102,13 @@ def validate_supabase_url(url: str) -> bool:
     if parsed.scheme not in ("http", "https"):
         raise ConfigurationError("Supabase URL must use HTTP or HTTPS")
 
+    # Bypass validation for local/dev HTTP setups
+    if os.getenv("SUPABASE_ALLOW_HTTP", "false").lower() == "true":
+        return True
+
     # Require HTTPS for production (non-local) URLs
     if parsed.scheme == "http":
         hostname = parsed.hostname or ""
-
-        # Bypass validation for local/dev HTTP setups
-        if os.getenv("SUPABASE_ALLOW_HTTP", "false").lower() == "true":
-            return True
 
         # Check for exact localhost and Docker internal hosts (security: prevent subdomain bypass)
         local_hosts = ["localhost", "127.0.0.1", "host.docker.internal"]
