@@ -34,6 +34,7 @@ services:
     networks:
       - app-network
       - supabase-net
+      - ollama-webui-net
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # Docker socket for MCP container control
       - ./python/src:/app/src # Mount source code for hot reload
@@ -188,4 +189,6 @@ networks:
   app-network:
     driver: bridge
   supabase-net:
+    external: true
+  ollama-webui-net:
     external: true
